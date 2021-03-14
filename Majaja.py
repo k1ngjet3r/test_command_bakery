@@ -249,7 +249,7 @@ top_frame.pack(side=tk.TOP)
 function_label = tk.Label(top_frame, text='Function', bg=common_bg, fg=common_fg)
 function_label.pack(side=tk.LEFT)
 
-combobox = ttk.Combobox(top_frame, values=['Call Smoke','call FN', 'call LN', 'call location','SMS', 'Navi', 'Radio','Reply', 'Other', 'Media'], width=12)
+combobox = ttk.Combobox(top_frame, values=['Call Smoke','call FN', 'call LN', 'call location','SMS','Message', 'Navi', 'Radio','Reply', 'Other', 'Media'], width=12)
 combobox.pack(side=tk.LEFT)
 combobox.bind('<<ComboboxSelected>>', on_select),
 var_hey_google = tk.IntVar()
@@ -314,6 +314,6 @@ window.call('wm', 'attributes', '.', '-topmost', '1')
 
 
 
-playsound('pornhub intro.mp3')
+#playsound('pornhub intro.mp3')
 window.mainloop()
-playsound('100_dollar.mp3')
+#playsound('100_dollar.mp3')
