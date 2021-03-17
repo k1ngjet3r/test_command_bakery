@@ -43,12 +43,12 @@ def sign_out():
 
 def pin_lock():
     adb_root()
-    os.system('adb shell locksetting set-pin 0000')
+    os.system('adb shell locksettings set-pin 0000')
 
 def pw_lock():
     adb_root()
-    os.system('adb shell locksetting set-password 0000')
+    os.system('adb shell locksettings set-password 0000')
 
 def pattern_lock():
     adb_root()
-    os.system('adb shell locksetting set-pattern 14789')
+    os.system('adb shell locksettings set-pattern 14789')
