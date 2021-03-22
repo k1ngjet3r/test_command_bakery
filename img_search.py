@@ -18,6 +18,10 @@ def image_search(target_img, pattern, precision=0.8):
     # preprocess image
     target = cv2.imread(target_img, 0)
     template = cv2.imread(pattern, 0)
+    if target_img is None:
+        raise FileNotFoundError('Image name {} cannot be found'.format(target_img))
+    if template is None:
+        raise FileNotFoundError('Image name {} cannot be found'.format(template))
 
     height, width = template.shape
     x_offset = width/2
@@ -27,9 +31,9 @@ def image_search(target_img, pattern, precision=0.8):
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
     if max_val < precision:
         return [-1, -1]
-    center_coordinate = (max_loc[0]+x_offset, max_loc[1]+y_offset)
+    x, y = (max_loc[0]+x_offset, max_loc[1]+y_offset)
 
-    return center_coordinate
+    return x, y
 
 def tap_xy(x, y):
     os.system('adb shell input tap {} {}'.format(x, y))
