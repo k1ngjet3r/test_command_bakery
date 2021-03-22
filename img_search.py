@@ -1,5 +1,3 @@
-import cv2
-
 '''
     Search for a pattern from an image
 
@@ -13,6 +11,8 @@ import cv2
     Return:
     the coordinate of the center of the matched pattern
 '''
+
+import cv2, os
 
 def image_search(target_img, pattern, precision=0.8):
     # preprocess image
@@ -30,4 +30,7 @@ def image_search(target_img, pattern, precision=0.8):
     center_coordinate = (max_loc[0]+x_offset, max_loc[1]+y_offset)
 
     return center_coordinate
+
+def tap_xy(x, y):
+    os.system('adb shell input tap {} {}'.format(x, y))
 
