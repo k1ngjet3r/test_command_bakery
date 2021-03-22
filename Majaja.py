@@ -1,5 +1,7 @@
 '''
-    This is version 1.1.0 Beta
+    Welcome to version 2.0.0
+
+    Adding new image recognition for system setting-related task accuracy
 
     Still updating the function and value to the function_value.json for Google Assistant Command query
 
@@ -24,6 +26,8 @@ img_list = ['gi_joe.jpg', 'gi_joe_majaja.jpg', 'gi_joe_meme_1.png', 'gi_joe_meme
 img_chosed = img_list[randrange(len(img_list))]
 
 img_directory = os.getcwd() + '\\img\\' + img_chosed
+
+audio_dir = os.getcwd() + '\\audio\\'
 
 # load the sound file
 # sound_list = []
