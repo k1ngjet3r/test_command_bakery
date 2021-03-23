@@ -11,7 +11,7 @@
 '''
 
 from tkinter import ttk
-from adb_command import adb_root, online, offline, sign_in, sign_out, pin_lock, pw_lock, pattern_lock, adb_root
+from adb_command import online, offline, pin_lock, pw_lock, pattern_lock
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
@@ -19,15 +19,16 @@ import json
 from random import randrange
 from tts_engine import hey_google_cmd, adb_cmd
 from playsound import playsound
+from status_ctrl import sign_in_google_account, sign_out_google_account
 
 # load the image file
 img_list = ['gi_joe.jpg', 'gi_joe_majaja.jpg', 'gi_joe_meme_1.png', 'gi_joe_meme_2.jpg']
 
 img_chosed = img_list[randrange(len(img_list))]
 
-img_directory = os.getcwd() + '\\img\\' + img_chosed
+img_directory = 'img\\memes\\' + img_chosed
 
-audio_dir = os.getcwd() + '\\audio\\'
+audio_dir = 'audio'
 
 # load the sound file
 # sound_list = []
@@ -78,7 +79,7 @@ def on_select(event):
     selected = event.widget.get()
 
     # Load and read the command JSON file
-    with open('function_value.json') as json_file:
+    with open('json\\function_value.json') as json_file:
         combobox_values = json.load(json_file)
 
     query_listbox.delete(0, 'end')
@@ -103,7 +104,7 @@ common_fg = 'white'
 common_bg = 'grey25'
 
 window = tk.Tk()
-window.title("MAJAJA v1.1.0 Beta")
+window.title("MAJAJA v2.0.0 Beta")
 window.resizable(False, False)
 
 
@@ -169,8 +170,8 @@ sign_lebel = tk.Label(sign_frame, text='Sign Status', width=20, font='Helvetica 
 sign_lebel.pack()
 
 sign_var = [
-    ("Sign-In", 1, sign_in),
-    ("Sign-Out", 2, sign_out)]
+    ("Sign-In", 1, sign_in_google_account),
+    ("Sign-Out", 2, sign_out_google_account)]
 
 sign_v = tk.IntVar()
 
@@ -288,32 +289,32 @@ send_btn = tk.Button(send_btn_frame, text='Execute',
 send_btn.pack(side=tk.LEFT)
 
 
-'''
-    Call, SMS, Navi control frame
-'''
+# '''
+#     Call, SMS, Navi control frame
+# '''
 
-mulit_frame = tk.Frame(window, bg=common_bg)
-mulit_frame.pack(side=tk.LEFT, fill=tk.Y)
-multi_lbl = tk.Label(mulit_frame, text='Multi Control', font='Helvetica 10 bold', width=29, bg=common_bg, fg='goldenrod1')
-multi_lbl.pack()
+# mulit_frame = tk.Frame(window, bg=common_bg)
+# mulit_frame.pack(side=tk.LEFT, fill=tk.Y)
+# multi_lbl = tk.Label(mulit_frame, text='Multi Control', font='Helvetica 10 bold', width=29, bg=common_bg, fg='goldenrod1')
+# multi_lbl.pack()
 
-call_frame = tk.Frame(mulit_frame, bg=common_bg, borderwidth=2, relief='groove')
-call_frame.pack()
-call_lbl = tk.Label(call_frame, text='Call', font='Helvetica 10 bold', bg=common_bg, fg=common_fg)
-call_lbl.pack()
+# call_frame = tk.Frame(mulit_frame, bg=common_bg, borderwidth=2, relief='groove')
+# call_frame.pack()
+# call_lbl = tk.Label(call_frame, text='Call', font='Helvetica 10 bold', bg=common_bg, fg=common_fg)
+# call_lbl.pack()
 
-fn_combox = ttk.Combobox(call_frame, width=10)
-fn_combox.pack(side=tk.LEFT)
+# fn_combox = ttk.Combobox(call_frame, width=10)
+# fn_combox.pack(side=tk.LEFT)
 
-ln_combo = ttk.Combobox(call_frame, width=10)
-ln_combo.pack(side=tk.LEFT)
+# ln_combo = ttk.Combobox(call_frame, width=10)
+# ln_combo.pack(side=tk.LEFT)
 
-call_exe_btn = tk.Button(call_frame, text='Send', width=5, bg='grey', font='Helvetica 9 bold')
-call_exe_btn.pack(side=tk.LEFT)
+# call_exe_btn = tk.Button(call_frame, text='Send', width=5, bg='grey', font='Helvetica 9 bold')
+# call_exe_btn.pack(side=tk.LEFT)
 
 
 
-window.call('wm', 'attributes', '.', '-topmost', '1')
+# window.call('wm', 'attributes', '.', '-topmost', '1')
 
 
 

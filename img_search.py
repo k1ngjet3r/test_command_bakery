@@ -1,3 +1,5 @@
+import cv2, os, time
+
 '''
     Search for a pattern from an image
 
@@ -11,8 +13,6 @@
     Return:
     the coordinate of the center of the matched pattern
 '''
-
-import cv2, os
 
 def image_search(target_img, pattern, precision=0.8):
     # preprocess image
@@ -32,6 +32,8 @@ def image_search(target_img, pattern, precision=0.8):
     result = cv2.matchTemplate(target, template, cv2.TM_CCOEFF_NORMED)
 
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+    print(max_val)
     
     if max_val < precision:
         return [-1, -1]
@@ -43,10 +45,20 @@ def image_search(target_img, pattern, precision=0.8):
 def tap_xy(x, y):
     os.system('adb shell input tap {} {}'.format(x, y))
 
-def screenshot():
+def get_cur_screenshot():
+    #get device's current screen shot and place it in img\temp folder
     current_dir = os.getcwd() + '/img/temp'
     current_dir.replace('\\', '/')
     os.system('adb shell screencap -p /sdcard/current.png')
     os.system('adb pull /sdcard/current.png {}'.format(current_dir))
 
-screenshot()
+def find_and_tap(pattern):
+    get_cur_screenshot()
+    target_img = 'img\\temp\\current.png'
+    img_dir = 'img\\ui_icon\\'
+    x, y = image_search(target_img, img_dir+pattern)
+    tap_xy(x, y)
+    time.sleep(0.5)
+
+# get_cur_screenshot()
+# image_search('current.png', 'img\\ui_icon\\sign_in_user_icon.png')
