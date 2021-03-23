@@ -22,7 +22,7 @@ def sign_in_google_account():
     find_and_tap('google_maps_icon.png')
 
     # tap user icon
-    find_and_tap('sign_in_user_icon.png')
+    find_and_tap('sign_out_user_icon.png')
 
     # tap sign in to google 
     find_and_tap('sign_in_to_google_text.png')

@@ -314,11 +314,11 @@ send_btn.pack(side=tk.LEFT)
 
 
 
-# window.call('wm', 'attributes', '.', '-topmost', '1')
+window.call('wm', 'attributes', '.', '-topmost', '1')
 
 
 
 
-playsound('audio\\pornhub intro.mp3')
+# playsound('audio\\pornhub intro.mp3')
 window.mainloop()
-playsound('audio\\100_dollar.mp3')
+# playsound('audio\\100_dollar.mp3')

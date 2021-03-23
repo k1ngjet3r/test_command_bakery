@@ -61,4 +61,4 @@ def find_and_tap(pattern):
     time.sleep(0.5)
 
 # get_cur_screenshot()
-# image_search('current.png', 'img\\ui_icon\\sign_in_user_icon.png')
+image_search('current.png', 'img\\ui_icon\\sign_out_user_icon.png')
