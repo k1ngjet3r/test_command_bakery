@@ -1,0 +1,64 @@
+import cv2, os, time
+
+'''
+    Search for a pattern from an image
+
+    <<based on https://github.com/drov0/python-imagesearch/blob/master/python_imagesearch/imagesearch.py>>
+
+    input:
+    target_img: target image that you want to search from
+    pattern: desired pattern you wish to find in the target_img
+    precision : the higher, the lesser tolerant and fewer false positives are found. Default is 0.8
+
+    Return:
+    the coordinate of the center of the matched pattern
+'''
+
+def image_search(target_img, pattern, precision=0.8):
+    # preprocess image
+    target = cv2.imread(target_img, 0)
+    template = cv2.imread(pattern, 0)
+
+    if target_img is None:
+        raise FileNotFoundError('Image name {} cannot be found'.format(target_img))
+    if template is None:
+        raise FileNotFoundError('Image name {} cannot be found'.format(template))
+
+    height, width = template.shape
+
+    x_offset = width/2
+    y_offset = height/2
+
+    result = cv2.matchTemplate(target, template, cv2.TM_CCOEFF_NORMED)
+
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+    print(max_val)
+    
+    if max_val < precision:
+        return [-1, -1]
+    
+    x, y = (max_loc[0]+x_offset, max_loc[1]+y_offset)
+
+    return x, y
+
+def tap_xy(x, y):
+    os.system('adb shell input tap {} {}'.format(x, y))
+
+def get_cur_screenshot():
+    #get device's current screen shot and place it in img\temp folder
+    current_dir = os.getcwd() + '/img/temp'
+    current_dir.replace('\\', '/')
+    os.system('adb shell screencap -p /sdcard/current.png')
+    os.system('adb pull /sdcard/current.png {}'.format(current_dir))
+
+def find_and_tap(pattern):
+    get_cur_screenshot()
+    target_img = 'img\\temp\\current.png'
+    img_dir = 'img\\ui_icon\\'
+    x, y = image_search(target_img, img_dir+pattern)
+    tap_xy(x, y)
+    time.sleep(0.5)
+
+# get_cur_screenshot()
+# image_search('current.png', 'img\\ui_icon\\sign_in_user_icon.png')
