@@ -18,7 +18,7 @@ def image_search(target_img, pattern, precision=0.8):
     # preprocess image
     target = cv2.imread(target_img, 0)
     template = cv2.imread(pattern, 0)
-    
+
     if target_img is None:
         raise FileNotFoundError('Image name {} cannot be found'.format(target_img))
     if template is None:
@@ -43,3 +43,10 @@ def image_search(target_img, pattern, precision=0.8):
 def tap_xy(x, y):
     os.system('adb shell input tap {} {}'.format(x, y))
 
+def screenshot():
+    current_dir = os.getcwd() + '/img/temp'
+    current_dir.replace('\\', '/')
+    os.system('adb shell screencap -p /sdcard/current.png')
+    os.system('adb pull /sdcard/current.png {}'.format(current_dir))
+
+screenshot()
