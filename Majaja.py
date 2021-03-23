@@ -319,6 +319,6 @@ send_btn.pack(side=tk.LEFT)
 
 
 
-#playsound('pornhub intro.mp3')
+playsound('audio\\pornhub intro.mp3')
 window.mainloop()
-#playsound('100_dollar.mp3')
+playsound('audio\\100_dollar.mp3')
