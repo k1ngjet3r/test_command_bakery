@@ -26,22 +26,23 @@ def sign_in_google_account():
 
     # tap sign in to google 
     find_and_tap('sign_in_to_google_text.png')
+    time.sleep(5)
 
     # sing in on car screen
     find_and_tap('sign_in_on_car_screen.png')
-    time.sleep(5)
+    time.sleep(10)
 
     # tap username entry field and enter username
     find_and_tap('username_entry_field.png')
     os.system('adb shell input text "{}"'.format(account['username']))
     find_and_tap('next_btn.png')
-    time.sleep(5)
+    time.sleep(8)
 
     # tap password entry field and enter password
     find_and_tap('password_entry_field.png')
     os.system('adb shell input text "{}"'.format(account['password']))
     find_and_tap('next_btn.png')
-    time.sleep(8)
+    time.sleep(10)
 
     #tap done
     find_and_tap('done_btn.png')
