@@ -11,15 +11,15 @@
 '''
 
 from tkinter import ttk
-from adb_command import online, offline, pin_lock, pw_lock, pattern_lock
+from func.adb_command import *
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
 import json
 from random import randrange
-from tts_engine import hey_google_cmd, adb_cmd
+from func.tts_engine import *
 from playsound import playsound
-from status_ctrl import sign_in_google_account, sign_out_google_account
+from func.status_ctrl import *
 
 # load the image file
 img_list = ['gi_joe.jpg', 'gi_joe_majaja.jpg', 'gi_joe_meme_1.png', 'gi_joe_meme_2.jpg']
