@@ -10,7 +10,7 @@
     8. Tap Done
 '''
 import json, time, os
-from img_search import find_and_tap
+from func.img_search import find_and_tap
 
 img = 'img\\ui_icon\\'
 
