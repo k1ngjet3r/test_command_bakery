@@ -1,61 +1,94 @@
-'''
-    Steps for signing in the Google Account via Google Maps
-    1. click maps icon
-    2. Tap user icon on the top right conor
-    3. Tap "sign in on the car screen
-    4. Enter username
-    5. Tap Next btn
-    6. Enter password
-    7. Tap Next btn
-    8. Tap Done
-'''
 import json, time, os
-from func.img_search import find_and_tap
+from func.img_search import find_and_tap, checking_info_screen
 
 img = 'img\\ui_icon\\'
 
+
 def sign_in_google_account():
+
+    '''
+        Steps for signing in the Google Account via Google Maps
+        1. click maps icon
+        2. Tap user icon on the top right conor
+        3. Tap "sign in on the car screen
+        4. Enter username
+        5. Tap Next btn
+        6. Enter password
+        7. Tap Next btn
+        8. Tap Done
+    '''
+
     with open('json\\google_account.json') as ac:
         account = json.load(ac)
 
     # tap google maps
-    find_and_tap('google_maps_icon.png')
+    print('tap google maps')
+    if not find_and_tap('google_maps_icon.png'):
+        return
 
     # tap user icon
-    find_and_tap('sign_out_user_icon.png')
+    print('tap user icon')
+    if not find_and_tap('sign_out_user_icon.png'):
+        return
+    
+    checking_info_screen()
 
     # tap sign in to google 
-    find_and_tap('sign_in_to_google_text.png')
-    time.sleep(5)
+    print('tap sign in')
+    if not find_and_tap('sign_in_to_google_text.png'):
+        return
+    
+    checking_info_screen()
 
     # sing in on car screen
-    find_and_tap('sign_in_on_car_screen.png')
-    time.sleep(10)
+    print('tap sign in on car screen')
+    if not find_and_tap('sign_in_on_car_screen.png'):
+        return
+
+    checking_info_screen()
 
     # tap username entry field and enter username
-    find_and_tap('username_entry_field.png')
-    os.system('adb shell input text "{}"'.format(account['username']))
-    find_and_tap('next_btn.png')
-    time.sleep(8)
+    print('tap username entry fielf and enter username')
+    if not find_and_tap('username_entry_field.png'):
+        return
+    else:
+        os.system('adb shell input text "{}"'.format(account['username']))
+        if not find_and_tap('next_btn.png'):
+            return
+    
+    checking_info_screen()
 
     # tap password entry field and enter password
-    find_and_tap('password_entry_field.png')
-    os.system('adb shell input text "{}"'.format(account['password']))
-    find_and_tap('next_btn.png')
-    time.sleep(10)
+    print('tap password entry field and enter password')
+    if not find_and_tap('password_entry_field.png'):
+        return
+    else:
+        os.system('adb shell input text "{}"'.format(account['password']))
+        if not find_and_tap('next_btn.png'):
+            return
+    
+    checking_info_screen()
 
     #tap done
-    find_and_tap('done_btn.png')
+    print('Done')
+    if not find_and_tap('done_btn.png'):
+        return
 
 
 def sign_out_google_account():
     # tap google maps
-    find_and_tap('google_maps_icon.png')
+    print('tap google maps')
+    if not find_and_tap('google_maps_icon.png'):
+        return
 
     # tap user icon
-    find_and_tap('sign_in_user_icon.png')
+    print('tap user icon')
+    if not find_and_tap('sign_in_user_icon.png'):
+        return
 
     # tap sign out google account
-    find_and_tap('sign_out_btn.png')
+    print('sign out')
+    if not find_and_tap('sign_out_btn.png'):
+        return
 
 # sign_in_google_account()
