@@ -61,5 +61,17 @@ def find_and_tap(pattern):
     tap_xy(x, y)
     time.sleep(0.5)
 
-# get_cur_screenshot()
-# find_and_tap('sign_in_user_icon.png')
+def checking_info_screen():
+    checking_info_img = ''
+    get_cur_screenshot()
+    target_img = 'img\\temp\\current.png'
+    while True:
+        if image_search(target_img, checking_info_img) != [-1, -1]:
+            time.sleep(1)
+            continue
+        else:
+            break
+
+# if __name__ == '__main__':
+#     get_cur_screenshot()
+#     find_and_tap('sign_in_user_icon.png')
