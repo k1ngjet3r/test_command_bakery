@@ -58,8 +58,11 @@ def find_and_tap(pattern):
     target_img = 'img\\temp\\current.png'
     img_dir = 'img\\ui_icon\\'
     x, y = image_search(target_img, img_dir+pattern)
-    tap_xy(x, y)
-    time.sleep(0.5)
+    if x == -1 and y == -1:
+        return False
+    else:
+        tap_xy(x, y)
+        time.sleep(0.5)
 
 def checking_info_screen():
     checking_info_img = ''
