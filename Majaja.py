@@ -1,5 +1,5 @@
 '''
-    Welcome to version 2.0.0
+    Welcome to version 2.1.0
 
     Adding new image recognition for system setting-related task accuracy
 
@@ -104,7 +104,7 @@ common_fg = 'white'
 common_bg = 'grey25'
 
 window = tk.Tk()
-window.title("MAJAJA v2.0.0 Beta")
+window.title("MAJAJA v2.1.0 Beta")
 window.resizable(False, False)
 
 
