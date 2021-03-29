@@ -10,7 +10,8 @@
         "call Natalie",
         "call Henderson",
         "call Natalie Henderson",
-        "call John Smith alternative phone"
+        "call John Smith alternative phone",
+        "call Initial Deja vu"
     ], 
     "call FN":[
         "call Abraham mobile",
@@ -162,7 +163,10 @@
 		"tune to one thousand AM",
 		"tune KQED FM",
 		"Play WKQI FM Radio",
-		"Previous Station",
+        "tune ICRT FM",
+        "tune to ICRT radio",
+        "play ICRT FM",
+        "Previous Station",
         "Next Station",
 		"turn up the volume",
         "turn down the volume"
