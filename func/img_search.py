@@ -1,4 +1,5 @@
-import cv2, os, time
+import os, time
+from cv2 import cv2
 
 '''
     Search for a pattern from an image

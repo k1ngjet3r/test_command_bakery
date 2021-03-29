@@ -40,7 +40,7 @@ audio_dir = 'audio'
 
 def creat_user():
     name = user_enrty.get()
-    name = name.replace(' ', '\ ')
+    name = name.replace(' ', '\\ ')
     frame = 'adb shell pm create-user '
     cmd = frame + name
     os.system('adb root')
@@ -176,8 +176,7 @@ sign_var = [
 sign_v = tk.IntVar()
 
 for status, num, cmd in sign_var:
-    sign_rb = tk.Radiobutton(sign_frame, text=status,
-                             variable=sign_v, value=num, command=cmd, bg=common_bg, fg=common_fg, activebackground=common_bg, activeforeground=common_fg, selectcolor=common_bg)
+    sign_rb = tk.Radiobutton(sign_frame, text=status, variable=sign_v, value=num, command=cmd, bg=common_bg, fg=common_fg, activebackground=common_bg, activeforeground=common_fg, selectcolor=common_bg)
     sign_rb.pack(side=tk.LEFT)
 
 '''
