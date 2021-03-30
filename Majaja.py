@@ -1,12 +1,15 @@
 '''
     Welcome to version 2.1.0
 
-    Adding new image recognition for system setting-related task accuracy
+    Created by: Jeter Lin
 
-    Still updating the function and value to the function_value.json for Google Assistant Command query
+    Adding new image recognition for system setting-related task accuracy
 
     Current function including internet conncetion control, google account login or out control, create user, and Google Assistant command sender
 
+    If this is your first time using Majaja, there are few things that you need to do:
+    1. Go to \json folder and create google_account.json to store google account's username and password
+    2. Create a folder named "temp" in the \img folder
     
 '''
 
@@ -29,14 +32,6 @@ img_chosed = img_list[randrange(len(img_list))]
 img_directory = 'img\\memes\\' + img_chosed
 
 audio_dir = 'audio'
-
-# load the sound file
-# sound_list = []
-
-# sound_chosed = sound_list[randrange(len(sound_list))]
-
-# sound_directory = os.getcwd() + '\\start_sound\\' + sound_chosed
-
 
 def creat_user():
     name = user_enrty.get()
