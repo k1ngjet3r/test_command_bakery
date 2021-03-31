@@ -14,15 +14,16 @@
 '''
 
 from tkinter import ttk
-from func.adb_command import *
+from func.adb_command import adb_root, online, offline, sign_in, sign_out, pin_lock, pw_lock, pattern_lock
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
 import json
 from random import randrange
-from func.tts_engine import *
+from func.tts_engine import activate_ga, tts, hey_google_cmd, adb_cmd
 from playsound import playsound
-from func.status_ctrl import *
+from func.status_ctrl import sign_in_google_account, sign_out_google_account
+from func.media_ctrl import play_pause, next_act, previous_act
 
 # load the image file
 img_list = ['gi_joe.jpg', 'gi_joe_majaja.jpg', 'gi_joe_meme_1.png', 'gi_joe_meme_2.jpg']
@@ -42,25 +43,44 @@ def creat_user():
     os.system(cmd)
     print(cmd)
 
-
 def exe_command():
     mode = mode_var.get()
-    query = query_listbox.get(query_listbox.curselection())
+    # query = query_listbox.get(query_listbox.curselection())
+    type_query = type_query_field.get()
     mode_list = ['Speech Mode', 'Majami Mode']
 
     print('[MODE] {}'.format(mode_list[mode-1]))
-    # if user selected "speech mode"
-    if mode == 1 and var_hey_google.get() == 1:
-        hey_google_cmd(query)
-        print('[TTS] {}'.format(query))
 
-    elif mode == 1 and var_hey_google.get() == 0:
-        adb_cmd(query)
+    # if user selected "speech mode"
+    # if query entry field has input
+    if mode == 1 and var_hey_google.get() == 1 and type_query != None:
+        hey_google_cmd(type_query)
+        print('[HeyGoogle/Typed/TTS] {}'.format(type_query))
+    
+    elif mode == 1 and var_hey_google.get() == 0 and type_query != None:
+        adb_cmd(type_query)
+        print('[Typed/TTS] {}'.format(type_query))
+        
+    elif mode == 1 and var_hey_google.get() == 1 and type_query == None:
+        query = query_listbox.get(query_listbox.curselection())
+        hey_google_cmd(query)
         print('[HeyGoogle/TTS] {}'.format(query))
 
+    elif mode == 1 and var_hey_google.get() == 0 and type_query == None:
+        query = query_listbox.get(query_listbox.curselection())
+        adb_cmd(query)
+        print('[TTS] {}'.format(query))
+
     # if user selected "Majami mode"
-    elif mode == 2:
-        query = query.replace(' ', '\ ')
+    elif mode == 2 and type_query != None:
+        query = type_query.replace(' ', '\\ ')
+        frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
+        os.system(frame+query)
+        print('[ADB] {}'.format(frame+query))
+
+    elif mode == 2 and type_query == None:
+        query = query_listbox.get(query_listbox.curselection())
+        query = query.replace(' ', '\\ ')
         frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
         os.system(frame+query)
         print('[ADB] {}'.format(frame+query))
@@ -219,13 +239,13 @@ media_ctrl_frm = tk.Frame(user_rlt_frame, borderwidth=2, relief='groove', bg=com
 
 media_ctrl_title = tk.Label(media_ctrl_frm, text='Media Control', width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
 media_ctrl_title.pack()
-previous_btn = tk.Button(media_ctrl_frm, text='Pervious', bg='grey', font='Helvetica 8 bold', width=7)
+previous_btn = tk.Button(media_ctrl_frm, text='Pervious', bg='grey', font='Helvetica 8 bold', width=7, command=previous_act)
 previous_btn.pack(side=tk.LEFT)
 
-play_pause_btn = tk.Button(media_ctrl_frm, text='Play/Pause', bg='grey', font='Helvetica 8 bold')
+play_pause_btn = tk.Button(media_ctrl_frm, text='Play/Pause', bg='grey', font='Helvetica 8 bold', command=play_pause)
 play_pause_btn.pack(side=tk.LEFT)
 
-next_btn = tk.Button(media_ctrl_frm, text='Next', width=4, bg='grey', font='Helvetica 8 bold')
+next_btn = tk.Button(media_ctrl_frm, text='Next', width=4, bg='grey', font='Helvetica 8 bold', command=previous_act)
 next_btn.pack(side=tk.LEFT)
 
 media_ctrl_frm.pack()
@@ -265,12 +285,18 @@ var = tk.StringVar()
 # var.set((1, 2, 3))
 
 query_listbox = tk.Listbox(
-    query_listbox_frame, listvariable=var, selectmode=tk.SINGLE, width=35, height=8, bg='grey75')
-query_listbox.pack(side=tk.LEFT)
+    query_listbox_frame, listvariable=var, selectmode=tk.SINGLE, width=35, height=6, bg='grey75')
+query_listbox.pack(side=tk.TOP)
 
-scrollbar = tk.Scrollbar(query_listbox_frame, orient="vertical")
-scrollbar.config(command=query_listbox.yview, background='grey')
-scrollbar.pack(side="left", fill="y")
+# scrollbar = tk.Scrollbar(query_listbox_frame, orient="vertical")
+# scrollbar.config(command=query_listbox.yview, background='grey')
+# scrollbar.pack(side="left", fill="y")
+
+sep= tk.Frame(query_listbox_frame, height=6, bg=common_bg)
+sep.pack(side=tk.TOP)
+
+type_query_field = tk.Entry(query_listbox_frame, width=35, bg='grey', fg=common_fg)
+type_query_field.pack(side=tk.TOP)
 
 sep= tk.Frame(cmd_frame, height=6, bg=common_bg)
 sep.pack(side=tk.TOP)
@@ -279,7 +305,7 @@ send_btn_frame = tk.Frame(cmd_frame, bg=common_bg)
 send_btn_frame.pack(side=tk.TOP)
 
 send_btn = tk.Button(send_btn_frame, text='Execute',
-                     width=30, command=exe_command, bg='grey', font='Helvetica 9 bold')
+                     width=29, command=exe_command, bg='grey', font='Helvetica 9 bold')
 send_btn.pack(side=tk.LEFT)
 
 
