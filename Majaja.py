@@ -14,7 +14,7 @@
 '''
 
 from tkinter import ttk
-from func.adb_command import adb_root, online, offline, sign_in, sign_out, pin_lock, pw_lock, pattern_lock
+from func.adb_command import adb_root, online, offline, pin_lock, pw_lock, pattern_lock
 from PIL import Image, ImageTk
 import tkinter as tk
 import os

@@ -36,7 +36,7 @@ def sign_in_google_account():
     i = 0
 
     while i < len(steps):
-        print(steps[i][:-4])
+        print('[Sign-In] {}'.format(steps[i][:-4]))
         progress = find_and_tap(steps[i])
         if not progress:
             print('[Error] Fail on step {}'.format(steps[i][:-4]))
@@ -121,7 +121,7 @@ def sign_out_google_account():
     i = 0
 
     while i < len(steps):
-        print(steps[i][:-4])
+        print('[Sign-In] {}'.format(steps[i][:-4]))
         progress = find_and_tap(steps[i])
         if not progress:
             print('[Error] Fail on step {}'.format(steps[i][:-4]))

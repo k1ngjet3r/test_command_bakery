@@ -20,7 +20,7 @@ Most of the functions were directly controlled by sending adb command, however, 
 
 ## First Time?
 If this is your first time using Majaja, there are few things that you need to do:
-1. Go to \json folder and create google_account.json to store google account's username and password
+1. Go to \json folder and create "google_account.json" to store google account's username and password
 2. Create a folder named "temp" in the \img folder
 
 

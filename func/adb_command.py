@@ -12,8 +12,13 @@ def check_adb_status():
     connection = subprocess.check_output(['adb', 'devices']).splitlines()
     if len(connection) <= 1:
         return False
-    return True
-
+    else:
+        for i in connection:
+            i = i.decode('ascii').split()
+            if 'fail' in i:
+                return False
+            return True
+    
 def adb_root():
     os.system('adb root')
 
@@ -63,6 +68,7 @@ def pw_lock():
     os.system('adb shell locksettings set-password 0000')
 
 def pattern_lock():
+    # default is a L shape pattern
     print('[DEBUG] set pattern')
     adb_root()
     os.system('adb shell locksettings set-pattern 14789')
