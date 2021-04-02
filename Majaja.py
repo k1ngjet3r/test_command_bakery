@@ -14,7 +14,7 @@
 '''
 
 from tkinter import ttk
-from func.adb_command import adb_root, online, offline, pin_lock, pw_lock, pattern_lock
+from func.adb_command import adb_root, online, offline, pin_lock, pw_lock, pattern_lock, screenshot
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
@@ -193,6 +193,21 @@ sign_v = tk.IntVar()
 for status, num, cmd in sign_var:
     sign_rb = tk.Radiobutton(sign_frame, text=status, variable=sign_v, value=num, command=cmd, bg=common_bg, fg=common_fg, activebackground=common_bg, activeforeground=common_fg, selectcolor=common_bg)
     sign_rb.pack(side=tk.LEFT)
+
+sep= tk.Frame(connection_sign_frame, height=6, bg=common_bg)
+sep.pack(side=tk.TOP)
+
+other_ctrl_lbl = tk.Label(connection_sign_frame, text='Other Ctrl', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
+other_ctrl_lbl.pack()
+
+other_ctrl_frame = tk.Frame(connection_sign_frame, borderwidth=2, relief='groove', bg=common_bg)
+other_ctrl_frame.pack()
+
+other_lbl = tk.Label(other_ctrl_frame, text='Other', width=20, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
+other_lbl.pack()
+
+screenshot_btn = tk.Button(other_ctrl_frame, text='screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
+screenshot_btn.pack()
 
 '''
     Frame that holds user_related control
