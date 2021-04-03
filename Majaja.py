@@ -14,8 +14,7 @@
 '''
 
 from tkinter import StringVar, ttk
-from tkinter.constants import YES
-from func.adb_command import adb_root, online, offline, pin_lock, pw_lock, pattern_lock, screenshot
+from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
@@ -65,27 +64,64 @@ def sign_in_google_account():
     i = 0
 
     v.set('Signing In, Please Wait!')
+    color.set('blue')
 
     while i < len(steps):
         v.set(steps[i][:-4])
+        color.set('blue')
         print('[Sign-In] {}'.format(steps[i][:-4]))
         progress = find_and_tap(steps[i])
         
         if not progress:
             print('[Error] Fail on step {}'.format(steps[i][:-4]))
             v.set('Something Went Wrong!')
+            color.set('red')
             break
         else:
             checking_info_screen()
             if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
                 v.set('Entering Username')
+                color.set('blue')
                 print('[DEBUG] entering username')
                 os.system('adb shell input text "{}"'.format(account['username']))
             elif steps[i][-9:-4] == 'field' and steps[i][:8] == 'password':
                 v.set('Entering Password')
+                color.set('blue')
                 print('[DEBUG] entering password')
                 os.system('adb shell input text "{}"'.format(account['password']))
             i += 1
+    else:
+        print('[DEBUG] DONE!')
+        s.set('DONE!')
+        color.set('green')
+
+def sign_out_google_account():
+    steps = ['google_maps_icon.png', 
+            'sign_in_user_icon.png',
+            'sign_out_btn.png',
+            ]
+    
+    i = 0
+
+    v.set('Signing Out, Please Wait!')
+    color.set('blue')
+
+    while i < len(steps):
+        v.set(steps[i][:-4])
+        color.set('blue')
+        print('[Sign-In] {}'.format(steps[i][:-4]))
+        progress = find_and_tap(steps[i])
+        if not progress:
+            print('[Error] Fail on step {}'.format(steps[i][:-4]))
+            v.set('Something Went Wrong!')
+            color.set('red')
+            break
+        else:
+            i += 1
+    else:
+        print('[DEBUG] DONE!')
+        s.set('DONE!')
+        color.set('green')
 
 def creat_user():
     name = user_enrty.get()
@@ -162,6 +198,15 @@ def security_setting():
         pw_lock()
     elif security_type == 'Pattern':
         pattern_lock()
+
+def adb_status():
+    # Checking adb status
+    if check_adb_status():
+        v.set('Ready')
+        color.set('green')
+    else:
+        v.set('OH NO~\n Did you forget to\nturn on USB debugging?')
+        color.set('red')
 
 common_fg = 'white'
 common_bg = 'grey25'
@@ -243,9 +288,13 @@ sep= tk.Frame(connection_sign_frame, height=6, bg=common_bg)
 sep.pack(side=tk.TOP)
 
 v = StringVar()
+color = StringVar()
 
-msg_lbl = tk.Label(connection_sign_frame, textvariable=v, font='Helvetica 9 bold', bg=common_bg, fg='red')
+adb_status()
+
+msg_lbl = tk.Label(connection_sign_frame, textvariable=v, font='Helvetica 9 bold', bg=common_bg, fg=color.get())
 msg_lbl.pack()
+
 
 # other_ctrl_lbl = tk.Label(connection_sign_frame, text='Other Ctrl', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
 # other_ctrl_lbl.pack()

@@ -10,7 +10,7 @@ from datetime import datetime
 def check_adb_status():
     print('[DEBUG] Checking adb connection')
     connection = subprocess.check_output(['adb', 'devices']).splitlines()
-    if len(connection) <= 1:
+    if len(connection) <= 2:
         return False
     else:
         for i in connection:
@@ -54,3 +54,8 @@ def screenshot():
     os.system('adb shell screencap -p /sdcard/{}.png'.format(name))
     os.system('adb pull /sdcard/{}.png {}'.format(name, path))
     os.system('adb shell rm /sdcard/{}.png'.format(name))
+
+
+if __name__ == '__main__':
+    print(subprocess.check_output(['adb', 'devices']).splitlines())
+    
