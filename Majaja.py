@@ -138,7 +138,6 @@ def exe_command():
         os.system(frame+query)
         print('[ADB] {}'.format(frame+query))
 
-
 def on_select(event):
     print('[DEBUG] event: ', event)
     print('[DEBUG] event.widget: ', event.widget)
@@ -164,15 +163,12 @@ def security_setting():
     elif security_type == 'Pattern':
         pattern_lock()
 
-    
-
 common_fg = 'white'
 common_bg = 'grey25'
 
 window = tk.Tk()
 window.title("MAJAJA v2.1.0 Beta")
 window.resizable(False, False)
-
 
 '''
     Frame that hold image
@@ -196,8 +192,6 @@ speech_mode.pack(side=tk.LEFT)
 
 Majami_mode = tk.Radiobutton(mode_frame, text='Majami Mode', variable=mode_var, value=2, bg=common_bg, fg=common_fg, activebackground=common_bg, activeforeground=common_fg, selectcolor=common_bg, font='Helvetica 10 bold')
 Majami_mode.pack(side=tk.LEFT)
-
-
 
 '''
     Frame that hold connection and sign status control
