@@ -14,6 +14,7 @@
 '''
 
 from tkinter import ttk
+from tkinter.constants import YES
 from func.adb_command import adb_root, online, offline, pin_lock, pw_lock, pattern_lock, screenshot
 from PIL import Image, ImageTk
 import tkinter as tk
@@ -24,6 +25,7 @@ from func.tts_engine import activate_ga, tts, hey_google_cmd, adb_cmd
 from playsound import playsound
 from func.status_ctrl import sign_in_google_account, sign_out_google_account
 from func.media_ctrl import play_pause, next_act, previous_act
+# from func.popup import Popup
 
 # load the image file
 img_list = ['gi_joe.jpg', 'gi_joe_majaja.jpg', 'gi_joe_meme_1.png', 'gi_joe_meme_2.jpg']
@@ -347,11 +349,17 @@ send_btn.pack(side=tk.LEFT)
 # call_exe_btn = tk.Button(call_frame, text='Send', width=5, bg='grey', font='Helvetica 9 bold')
 # call_exe_btn.pack(side=tk.LEFT)
 
+'''
+    Message Frame
+'''
+msg_frm = tk.Frame(window, width=300, bg=common_bg)
+msg_frm.pack(side=tk.LEFT, fill=tk.Y)
 
+msg_lbl = tk.Label(msg_frm, text='Message', font='Helvetica 10 bold', width=29, bg=common_bg, fg='goldenrod1')
+msg_lbl.pack()
 
-window.call('wm', 'attributes', '.', '-topmost', '1')
-
-
+msg_box_frm = tk.Frame(msg_frm, borderwidth=2, relief='groove', bg=common_bg)
+msg_box_frm.pack()
 
 
 # playsound('audio\\pornhub intro.mp3')
