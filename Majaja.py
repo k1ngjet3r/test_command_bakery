@@ -13,28 +13,79 @@
     
 '''
 
-from tkinter import ttk
+from tkinter import StringVar, ttk
 from tkinter.constants import YES
 from func.adb_command import adb_root, online, offline, pin_lock, pw_lock, pattern_lock, screenshot
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
 import json
-from random import randrange
+from func.img_and_audio import img_selector, audio_selector
 from func.tts_engine import activate_ga, tts, hey_google_cmd, adb_cmd
 from playsound import playsound
-from func.status_ctrl import sign_in_google_account, sign_out_google_account
+from func.status_ctrl import sign_out_google_account
 from func.media_ctrl import play_pause, next_act, previous_act
+from tkinter import messagebox
+import time
+from func.img_search import find_and_tap, checking_info_screen
 # from func.popup import Popup
 
-# load the image file
-img_list = ['gi_joe.jpg', 'gi_joe_majaja.jpg', 'gi_joe_meme_1.png', 'gi_joe_meme_2.jpg']
+img_directory = img_selector()
 
-img_chosed = img_list[randrange(len(img_list))]
 
-img_directory = 'img\\memes\\' + img_chosed
+def sign_in_google_account():
 
-audio_dir = 'audio'
+    '''
+        Steps for signing in the Google Account via Google Maps
+        1. click maps icon
+        2. Tap user icon on the top right conor
+        3. Tap "sign in on the car screen
+        4. Enter username
+        5. Tap Next btn
+        6. Enter password
+        7. Tap Next btn
+        8. Tap Done
+    '''
+
+    with open('json\\google_account.json') as ac:
+        account = json.load(ac)
+
+    steps = [
+        'google_maps_icon.png',
+        'sign_out_user_icon.png',
+        'sign_in_to_google_text.png',
+        'sign_in_on_car_screen.png',
+        'username_entry_field.png',
+        'next_btn.png',
+        'password_entry_field.png',
+        'next_btn.png',
+        'done_btn.png'
+    ]
+
+    i = 0
+
+    v.set('Signing In, Please Wait!')
+
+    while i < len(steps):
+        v.set(steps[i][:-4])
+        print('[Sign-In] {}'.format(steps[i][:-4]))
+        progress = find_and_tap(steps[i])
+        
+        if not progress:
+            print('[Error] Fail on step {}'.format(steps[i][:-4]))
+            v.set('Something Went Wrong!')
+            break
+        else:
+            checking_info_screen()
+            if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
+                v.set('Entering Username')
+                print('[DEBUG] entering username')
+                os.system('adb shell input text "{}"'.format(account['username']))
+            elif steps[i][-9:-4] == 'field' and steps[i][:8] == 'password':
+                v.set('Entering Password')
+                print('[DEBUG] entering password')
+                os.system('adb shell input text "{}"'.format(account['password']))
+            i += 1
 
 def creat_user():
     name = user_enrty.get()
@@ -113,9 +164,7 @@ def security_setting():
     elif security_type == 'Pattern':
         pattern_lock()
 
-
-
-# adb_root()
+    
 
 common_fg = 'white'
 common_bg = 'grey25'
@@ -199,17 +248,22 @@ for status, num, cmd in sign_var:
 sep= tk.Frame(connection_sign_frame, height=6, bg=common_bg)
 sep.pack(side=tk.TOP)
 
-other_ctrl_lbl = tk.Label(connection_sign_frame, text='Other Ctrl', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
-other_ctrl_lbl.pack()
+v = StringVar()
 
-other_ctrl_frame = tk.Frame(connection_sign_frame, borderwidth=2, relief='groove', bg=common_bg)
-other_ctrl_frame.pack()
+msg_lbl = tk.Label(connection_sign_frame, textvariable=v, font='Helvetica 9 bold', bg=common_bg, fg='red')
+msg_lbl.pack()
 
-other_lbl = tk.Label(other_ctrl_frame, text='Other', width=20, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
-other_lbl.pack()
+# other_ctrl_lbl = tk.Label(connection_sign_frame, text='Other Ctrl', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
+# other_ctrl_lbl.pack()
 
-screenshot_btn = tk.Button(other_ctrl_frame, text='screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
-screenshot_btn.pack()
+# other_ctrl_frame = tk.Frame(connection_sign_frame, borderwidth=2, relief='groove', bg=common_bg)
+# other_ctrl_frame.pack()
+
+# other_lbl = tk.Label(other_ctrl_frame, text='Other', width=20, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
+# other_lbl.pack()
+
+# screenshot_btn = tk.Button(other_ctrl_frame, text='screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
+# screenshot_btn.pack()
 
 '''
     Frame that holds user_related control
@@ -249,25 +303,7 @@ security_btn.pack(side=tk.LEFT)
 sep= tk.Frame(user_rlt_frame, height=6, bg=common_bg)
 sep.pack(side=tk.TOP)
 
-media_lbl = tk.Label(user_rlt_frame, text='Media', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
-media_lbl.pack()
 
-media_ctrl_frm = tk.Frame(user_rlt_frame, borderwidth=2, relief='groove', bg=common_bg)
-
-media_ctrl_title = tk.Label(media_ctrl_frm, text='Media Control', width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
-media_ctrl_title.pack()
-previous_btn = tk.Button(media_ctrl_frm, text='Pervious', bg='grey', font='Helvetica 8 bold', width=7, command=previous_act)
-previous_btn.pack(side=tk.LEFT)
-
-play_pause_btn = tk.Button(media_ctrl_frm, text='Play/Pause', bg='grey', font='Helvetica 8 bold', command=play_pause)
-play_pause_btn.pack(side=tk.LEFT)
-
-next_btn = tk.Button(media_ctrl_frm, text='Next', width=4, bg='grey', font='Helvetica 8 bold', command=previous_act)
-next_btn.pack(side=tk.LEFT)
-
-media_ctrl_frm.pack()
-# max_user_btn = tk.Button(user_rlt_frame, text='Max User')
-# max_user_btn.pack()
 
 '''
     Frame that holds command control
@@ -348,20 +384,45 @@ send_btn.pack(side=tk.LEFT)
 
 # call_exe_btn = tk.Button(call_frame, text='Send', width=5, bg='grey', font='Helvetica 9 bold')
 # call_exe_btn.pack(side=tk.LEFT)
-
 '''
-    Message Frame
+    more control frame
 '''
-msg_frm = tk.Frame(window, width=300, bg=common_bg)
-msg_frm.pack(side=tk.LEFT, fill=tk.Y)
-
-msg_lbl = tk.Label(msg_frm, text='Message', font='Helvetica 10 bold', width=29, bg=common_bg, fg='goldenrod1')
-msg_lbl.pack()
-
-msg_box_frm = tk.Frame(msg_frm, borderwidth=2, relief='groove', bg=common_bg)
-msg_box_frm.pack()
+more_ctrl = tk.Frame(window, width=500, bg=common_bg)
+more_ctrl.pack(side=tk.LEFT, fill=tk.Y)
 
 
-# playsound('audio\\pornhub intro.mp3')
+media_lbl = tk.Label(more_ctrl, text='Other', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
+media_lbl.pack()
+
+media_ctrl_frm = tk.Frame(more_ctrl, borderwidth=2, relief='groove', bg=common_bg)
+
+media_ctrl_title = tk.Label(media_ctrl_frm, text='Media Control', width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
+media_ctrl_title.pack()
+previous_btn = tk.Button(media_ctrl_frm, text=u"\u23EE", bg='grey', font='Helvetica 11 bold', width=5, command=previous_act)
+previous_btn.pack(side=tk.LEFT)
+
+play_pause_btn = tk.Button(media_ctrl_frm, text=u"\u23EF", bg='grey', font='Helvetica 11 bold', width=5, command=play_pause)
+play_pause_btn.pack(side=tk.LEFT)
+
+next_btn = tk.Button(media_ctrl_frm, text=u"\u23ED", width=5, bg='grey', font='Helvetica 11 bold', command=previous_act)
+next_btn.pack(side=tk.LEFT)
+
+media_ctrl_frm.pack()
+# max_user_btn = tk.Button(user_rlt_frame, text='Max User')
+# max_user_btn.pack()
+
+other_ctrl_frame = tk.Frame(more_ctrl, borderwidth=2, relief='groove', bg=common_bg)
+other_ctrl_frame.pack()
+
+other_lbl = tk.Label(other_ctrl_frame, text='Other', width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
+other_lbl.pack()
+
+screenshot_btn = tk.Button(other_ctrl_frame, text='screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
+screenshot_btn.pack()
+
+
+window.call('wm', 'attributes', '.', '-topmost', '1')
+
+# playsound(audio_selector())
 window.mainloop()
 # playsound('audio\\100_dollar.mp3')
