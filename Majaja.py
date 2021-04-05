@@ -205,7 +205,7 @@ def adb_status():
         v.set('Ready')
         color.set('green')
     else:
-        v.set('OH NO~\n Did you forget to\nturn on USB debugging?')
+        v.set('OH NO~\nDid you forget to\nturn on USB debugging?')
         color.set('red')
 
 common_fg = 'white'
@@ -292,7 +292,7 @@ color = StringVar()
 
 adb_status()
 
-msg_lbl = tk.Label(connection_sign_frame, textvariable=v, font='Helvetica 9 bold', bg=common_bg, fg=color.get())
+msg_lbl = tk.Label(connection_sign_frame, textvariable=v, font='Helvetica 9 bold', bg=common_bg, fg=color.get(), anchor="e", justify=tk.LEFT)
 msg_lbl.pack()
 
 
