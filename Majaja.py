@@ -92,7 +92,7 @@ def sign_in_google_account():
             i += 1
     else:
         print('[DEBUG] DONE!')
-        s.set('DONE!')
+        v.set('DONE!')
         color.set('green')
 
 def sign_out_google_account():
