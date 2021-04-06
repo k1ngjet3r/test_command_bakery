@@ -38,10 +38,7 @@ def sign_in_google_account():
     while i < len(steps):
         print('[Sign-In] {}'.format(steps[i][:-4]))
         progress = find_and_tap(steps[i])
-        if not progress:
-            print('[Error] Fail on step {}'.format(steps[i][:-4]))
-            break
-        else:
+        if progress:
             checking_info_screen()
             if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
                 print('[DEBUG] entering username')
@@ -50,6 +47,11 @@ def sign_in_google_account():
                 print('[DEBUG] entering password')
                 os.system('adb shell input text "{}"'.format(account['password']))
             i += 1
+        else:
+            print('[Error] Fail on step {}'.format(steps[i][:-4]))
+            break
+
+        time.sleep(3)
 
     # # tap google maps
     # print('tap google maps')

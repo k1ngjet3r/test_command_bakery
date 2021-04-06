@@ -40,6 +40,7 @@ def image_search(target_img, pattern, precision=0.8):
             return [-1, -1]
         
         x, y = (max_loc[0]+x_offset, max_loc[1]+y_offset)
+        print(x, y)
 
         return x, y
     
@@ -62,17 +63,29 @@ def find_and_tap(pattern):
     img_dir = 'img\\ui_icon\\'
     try:
         x, y = image_search(target_img, img_dir+pattern)
-        if x == -1 and y == -1:
-            return False
-        else:
+        if x != -1 and y != -1:
             tap_xy(x, y)
             time.sleep(0.5)
+        else:
+            return False
+
     except TypeError:
         print('[ImgNotFound] Please check your setting or device connection')
 
 
 def checking_info_screen():
-    checking_info_img = ''
+    checking_info_img = 'checking_info_text.png'
+    get_cur_screenshot()
+    target_img = 'img\\temp\\current.png'
+    while True:
+        if image_search(target_img, checking_info_img) != [-1, -1]:
+            time.sleep(1)
+            continue
+        else:
+            break
+
+def checking_signin_screen():
+    checking_info_img = 'signing_in_text.png'
     get_cur_screenshot()
     target_img = 'img\\temp\\current.png'
     while True:
