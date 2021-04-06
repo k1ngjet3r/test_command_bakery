@@ -140,42 +140,58 @@ def exe_command():
     type_query = type_query_field.get()
     mode_list = ['Speech Mode', 'Majami Mode']
 
+    # print(type_query)
+    # print(type_query == None)
+    # print(type_query == '')
+
     print('[MODE] {}'.format(mode_list[mode-1]))
 
     # if user selected "speech mode"
-    # if query entry field has input
-    if mode == 1 and var_hey_google.get() == 1 and type_query != None:
-        hey_google_cmd(type_query)
-        print('[HeyGoogle/Typed/TTS] {}'.format(type_query))
+    if mode == 1:
+        # if user checked the hey google checkbox
+        if var_hey_google.get() == 1:
+            # if user did not enter any query
+            if type_query == '':
+                query = query_listbox.get(query_listbox.curselection())
+                hey_google_cmd(query)
+                print('[HeyGoogle/TTS] {}'.format(query))
+
+            # if user entered the query by themselve
+            elif type_query != '':
+                hey_google_cmd(type_query)
+                print('[HeyGoogle/Typed/TTS] {}'.format(type_query))
+            
+        # if user did not checked the hey google checkbox
+        elif var_hey_google.get() == 0:
+            # if user entered the query by themselve
+            if type_query != '':
+                adb_cmd(type_query)
+                print('[Typed/TTS] {}'.format(type_query))
+            # if user did not enter any query
+            elif type_query == '':
+                query = query_listbox.get(query_listbox.curselection())
+                adb_cmd(query)
+                print('[TTS] {}'.format(query))
     
-    elif mode == 1 and var_hey_google.get() == 0 and type_query != None:
-        adb_cmd(type_query)
-        print('[Typed/TTS] {}'.format(type_query))
-        
-    elif mode == 1 and var_hey_google.get() == 1 and type_query == None:
-        query = query_listbox.get(query_listbox.curselection())
-        hey_google_cmd(query)
-        print('[HeyGoogle/TTS] {}'.format(query))
-
-    elif mode == 1 and var_hey_google.get() == 0 and type_query == None:
-        query = query_listbox.get(query_listbox.curselection())
-        adb_cmd(query)
-        print('[TTS] {}'.format(query))
-
     # if user selected "Majami mode"
-    elif mode == 2 and type_query != None:
-        query = type_query.replace(' ', '\\ ')
-        frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
-        os.system(frame+query)
-        print('[ADB] {}'.format(frame+query))
+    elif mode == 2:
+        # if user did not enter any query
+        if type_query == '':
+            query = query_listbox.get(query_listbox.curselection())
+            query = query.replace(' ', '\\ ')
+            frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
+            os.system(frame+query)
+            print('[ADB] {}'.format(frame+query))
 
-    elif mode == 2 and type_query == None:
-        query = query_listbox.get(query_listbox.curselection())
-        query = query.replace(' ', '\\ ')
-        frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
-        os.system(frame+query)
-        print('[ADB] {}'.format(frame+query))
-
+        # if user entered the query by themselve
+        elif type_query != '':
+            query = type_query.replace(' ', '\\ ')
+            frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
+            os.system(frame+query)
+            print('[ADB] {}'.format(frame+query))
+        
+        
+            
 def on_select(event):
     print('[DEBUG] event: ', event)
     print('[DEBUG] event.widget: ', event.widget)
@@ -297,18 +313,6 @@ adb_status()
 msg_lbl = tk.Label(connection_sign_frame, textvariable=v, font='Helvetica 9 bold', bg=common_bg, fg=color.get(), anchor="e", justify=tk.LEFT)
 msg_lbl.pack()
 
-
-# other_ctrl_lbl = tk.Label(connection_sign_frame, text='Other Ctrl', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
-# other_ctrl_lbl.pack()
-
-# other_ctrl_frame = tk.Frame(connection_sign_frame, borderwidth=2, relief='groove', bg=common_bg)
-# other_ctrl_frame.pack()
-
-# other_lbl = tk.Label(other_ctrl_frame, text='Other', width=20, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
-# other_lbl.pack()
-
-# screenshot_btn = tk.Button(other_ctrl_frame, text='screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
-# screenshot_btn.pack()
 
 '''
     Frame that holds user_related control
