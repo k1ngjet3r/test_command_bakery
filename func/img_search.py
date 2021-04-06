@@ -37,7 +37,7 @@ def image_search(target_img, pattern, precision=0.8):
         print(max_val)
         
         if max_val < precision:
-            return [-1, -1]
+            return False
         
         x, y = (max_loc[0]+x_offset, max_loc[1]+y_offset)
         print(x, y)
@@ -62,12 +62,12 @@ def find_and_tap(pattern):
     target_img = 'img\\temp\\current.png'
     img_dir = 'img\\ui_icon\\'
     try:
-        x, y = image_search(target_img, img_dir+pattern)
-        if x != -1 and y != -1:
-            tap_xy(x, y)
-            time.sleep(0.5)
-        else:
+        if image_search(target_img, img_dir+pattern) ==  False:
             return False
+        else:
+            x, y = image_search(target_img, img_dir+pattern)
+            tap_xy(x, y)
+            
 
     except TypeError:
         print('[ImgNotFound] Please check your setting or device connection')

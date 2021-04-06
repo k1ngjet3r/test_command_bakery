@@ -22,11 +22,11 @@ import json
 from func.img_and_audio import img_selector, audio_selector
 from func.tts_engine import activate_ga, tts, hey_google_cmd, adb_cmd
 from playsound import playsound
-from func.status_ctrl import sign_out_google_account
+# from func.status_ctrl import sign_out_google_account
 from func.media_ctrl import play_pause, next_act, previous_act
 from tkinter import messagebox
 import time
-from func.img_search import find_and_tap, checking_info_screen
+from func.img_search import find_and_tap, checking_info_screen, checking_signin_screen
 # from func.popup import Popup
 
 img_directory = img_selector()
@@ -63,37 +63,38 @@ def sign_in_google_account():
 
     i = 0
 
-    v.set('Signing In, Please Wait!')
     color.set('blue')
+    v.set('Signing In, Please Wait!')
 
     while i < len(steps):
-        v.set(steps[i][:-4])
         color.set('blue')
+        v.set(steps[i][:-4])
         print('[Sign-In] {}'.format(steps[i][:-4]))
         progress = find_and_tap(steps[i])
         
-        if not progress:
+        if progress == False:
             print('[Error] Fail on step {}'.format(steps[i][:-4]))
-            v.set('Something Went Wrong!')
             color.set('red')
+            v.set('Something Went Wrong!')
             break
         else:
+            time.sleep(2)
             checking_info_screen()
             if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
-                v.set('Entering Username')
                 color.set('blue')
+                v.set('Entering Username')
                 print('[DEBUG] entering username')
                 os.system('adb shell input text "{}"'.format(account['username']))
             elif steps[i][-9:-4] == 'field' and steps[i][:8] == 'password':
-                v.set('Entering Password')
                 color.set('blue')
+                v.set('Entering Password')
                 print('[DEBUG] entering password')
                 os.system('adb shell input text "{}"'.format(account['password']))
             i += 1
     else:
-        print('[DEBUG] DONE!')
-        v.set('DONE!')
+        print('[DEBUG] Signin Successful!')
         color.set('green')
+        v.set('DONE!')
 
 def sign_out_google_account():
     steps = ['google_maps_icon.png', 
@@ -103,25 +104,26 @@ def sign_out_google_account():
     
     i = 0
 
-    v.set('Signing Out, Please Wait!')
     color.set('blue')
-
+    v.set('Signing Out, Please Wait!')
+    
     while i < len(steps):
-        v.set(steps[i][:-4])
         color.set('blue')
+        v.set(steps[i][:-4])
         print('[Sign-In] {}'.format(steps[i][:-4]))
         progress = find_and_tap(steps[i])
-        if not progress:
+        if progress == False:
             print('[Error] Fail on step {}'.format(steps[i][:-4]))
-            v.set('Something Went Wrong!')
             color.set('red')
+            v.set('Something Went Wrong!')
             break
         else:
             i += 1
+            time.sleep(2)
     else:
-        print('[DEBUG] DONE!')
-        s.set('DONE!')
+        print('[DEBUG] Sign Out Successful!')
         color.set('green')
+        v.set('DONE!')
 
 def creat_user():
     name = user_enrty.get()
