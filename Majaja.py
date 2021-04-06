@@ -189,9 +189,7 @@ def exe_command():
             frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
             os.system(frame+query)
             print('[ADB] {}'.format(frame+query))
-        
-        
-            
+
 def on_select(event):
     print('[DEBUG] event: ', event)
     print('[DEBUG] event.widget: ', event.widget)
