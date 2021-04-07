@@ -32,7 +32,6 @@ from func.img_search import find_and_tap, checking_screen
 
 img_directory = img_selector()
 
-
 def sign_in_google_account():
 
     '''
@@ -157,25 +156,25 @@ def exe_command():
             # if user did not enter any query
             if type_query == '':
                 query = query_listbox.get(query_listbox.curselection())
-                hey_google_cmd(query)
                 print('[HeyGoogle/TTS] {}'.format(query))
+                hey_google_cmd(query)
 
             # if user entered the query by themselve
             elif type_query != '':
-                hey_google_cmd(type_query)
                 print('[HeyGoogle/Typed/TTS] {}'.format(type_query))
+                hey_google_cmd(type_query)
             
         # if user did not checked the hey google checkbox
         elif var_hey_google.get() == 0:
             # if user entered the query by themselve
             if type_query != '':
-                adb_cmd(type_query)
                 print('[Typed/TTS] {}'.format(type_query))
+                adb_cmd(type_query)
             # if user did not enter any query
             elif type_query == '':
                 query = query_listbox.get(query_listbox.curselection())
-                adb_cmd(query)
                 print('[TTS] {}'.format(query))
+                adb_cmd(query)
     
     # if user selected "Majami mode"
     elif mode == 2:
@@ -196,11 +195,9 @@ def exe_command():
             query = type_query.replace(' ', '\\ ')
             frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
             print('[ADB] {}'.format(frame+query))
-            print('[ADB] {}'.format(frame+query))
             adb_query = frame.append(query)
             subprocess.check_output(adb_query)
             # os.system(frame+query)
-
 
 def on_select(event):
     # print('[DEBUG] event: ', event)
