@@ -20,10 +20,10 @@ def image_search(target_img, pattern, precision=0.8):
     target = cv2.imread(target_img, 0)
     template = cv2.imread(pattern, 0)
 
-    if target_img is None:
-        raise FileNotFoundError('Image name {} cannot be found'.format(target_img))
-    if template is None:
-        raise FileNotFoundError('Image name {} cannot be found'.format(template))
+    # if target_img is None:
+    #     raise FileNotFoundError('Image name {} cannot be found'.format(target_img))
+    # if template is None:
+    #     raise FileNotFoundError('Image name {} cannot be found'.format(template))
 
     height, width = template.shape
 
@@ -40,7 +40,7 @@ def image_search(target_img, pattern, precision=0.8):
             return False
         
         x, y = (max_loc[0]+x_offset, max_loc[1]+y_offset)
-        print(x, y)
+        # print(x, y)
 
         return x, y
     
@@ -74,26 +74,38 @@ def find_and_tap(pattern):
 
 
 def checking_info_screen():
-    checking_info_img = 'checking_info_text.png'
-    get_cur_screenshot()
-    target_img = 'img\\temp\\current.png'
+    checking_info_img = 'img\\ui_icon\\checking_info_text.png'   
     while True:
-        if image_search(target_img, checking_info_img) != [-1, -1]:
+        get_cur_screenshot()
+        target_img = 'img\\temp\\current.png'
+        if image_search(target_img, checking_info_img) != False:
             time.sleep(1)
             continue
         else:
             break
 
 def checking_signin_screen():
-    checking_info_img = 'signing_in_text.png'
-    get_cur_screenshot()
-    target_img = 'img\\temp\\current.png'
+    checking_info_img = 'img\\ui_icon\\signing_in_text.png'
     while True:
-        if image_search(target_img, checking_info_img) != [-1, -1]:
+        get_cur_screenshot()
+        target_img = 'img\\temp\\current.png'
+        if image_search(target_img, checking_info_img) != False:
             time.sleep(1)
             continue
         else:
             break
+
+def checking_screen(img):
+    checking_info_img = 'img\\ui_icon\\' + img
+    while True:
+        get_cur_screenshot()
+        target_img = 'img\\temp\\current.png'
+        if image_search(target_img, checking_info_img) != False:
+            time.sleep(1)
+            continue
+        else:
+            break
+    
 
 # if __name__ == '__main__':
 #     get_cur_screenshot()

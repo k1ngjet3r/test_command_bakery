@@ -26,7 +26,7 @@ from playsound import playsound
 from func.media_ctrl import play_pause, next_act, previous_act
 from tkinter import messagebox
 import time
-from func.img_search import find_and_tap, checking_info_screen, checking_signin_screen
+from func.img_search import find_and_tap, checking_screen
 # from func.popup import Popup
 
 img_directory = img_selector()
@@ -55,10 +55,6 @@ def sign_in_google_account():
         'sign_in_to_google_text.png',
         'sign_in_on_car_screen.png',
         'username_entry_field.png',
-        'next_btn.png',
-        'password_entry_field.png',
-        'next_btn.png',
-        'done_btn.png'
     ]
 
     i = 0
@@ -79,17 +75,24 @@ def sign_in_google_account():
             break
         else:
             time.sleep(2)
-            checking_info_screen()
+            checking_screen('checking_info_text.png')
             if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
                 color.set('blue')
                 v.set('Entering Username')
                 print('[DEBUG] entering username')
                 os.system('adb shell input text "{}"'.format(account['username']))
-            elif steps[i][-9:-4] == 'field' and steps[i][:8] == 'password':
+                time.sleep(1)
+                find_and_tap('next_btn.png')
+                checking_screen('signing_pending_screen.png')
+
+                time.sleep(5)
                 color.set('blue')
                 v.set('Entering Password')
                 print('[DEBUG] entering password')
                 os.system('adb shell input text "{}"'.format(account['password']))
+                time.sleep(3)
+                find_and_tap('next_btn.png')
+                checking_screen('signing_in_text.png')
             i += 1
     else:
         print('[DEBUG] Signin Successful!')

@@ -27,9 +27,7 @@ def sign_in_google_account():
         'sign_in_to_google_text.png',
         'sign_in_on_car_screen.png',
         'username_entry_field.png',
-        'next_btn.png',
         'password_entry_field.png',
-        'next_btn.png',
         'done_btn.png'
     ]
 
@@ -43,9 +41,13 @@ def sign_in_google_account():
             if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
                 print('[DEBUG] entering username')
                 os.system('adb shell input text "{}"'.format(account['username']))
+                time.sleep(2)
+                find_and_tap('next_btn.png')
             elif steps[i][-9:-4] == 'field' and steps[i][:8] == 'password':
                 print('[DEBUG] entering password')
                 os.system('adb shell input text "{}"'.format(account['password']))
+                time.sleep(2)
+                find_and_tap('next_btn.png')
             i += 1
         else:
             print('[Error] Fail on step {}'.format(steps[i][:-4]))
