@@ -24,8 +24,8 @@ def adb_cmd(query):
     tts(query)
 
 # hey_google_cmd('Hello')
-
-frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
-frame = frame.split()
-frame.append('Majaja')
-print(frame)
+if __name__ == '__main__':
+    frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
+    frame = frame.split()
+    frame.append('Majaja')
+    print(frame)
