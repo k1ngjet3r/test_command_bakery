@@ -4,56 +4,56 @@ from func.img_search import find_and_tap, checking_info_screen
 img = 'img\\ui_icon\\'
 
 
-def sign_in_google_account():
+# def sign_in_google_account():
 
-    '''
-        Steps for signing in the Google Account via Google Maps
-        1. click maps icon
-        2. Tap user icon on the top right conor
-        3. Tap "sign in on the car screen
-        4. Enter username
-        5. Tap Next btn
-        6. Enter password
-        7. Tap Next btn
-        8. Tap Done
-    '''
+#     '''
+#         Steps for signing in the Google Account via Google Maps
+#         1. click maps icon
+#         2. Tap user icon on the top right conor
+#         3. Tap "sign in on the car screen
+#         4. Enter username
+#         5. Tap Next btn
+#         6. Enter password
+#         7. Tap Next btn
+#         8. Tap Done
+#     '''
 
-    with open('json\\google_account.json') as ac:
-        account = json.load(ac)
+#     with open('json\\google_account.json') as ac:
+#         account = json.load(ac)
 
-    steps = [
-        'google_maps_icon.png',
-        'sign_out_user_icon.png',
-        'sign_in_to_google_text.png',
-        'sign_in_on_car_screen.png',
-        'username_entry_field.png',
-        'password_entry_field.png',
-        'done_btn.png'
-    ]
+#     steps = [
+#         'google_maps_icon.png',
+#         'sign_out_user_icon.png',
+#         'sign_in_to_google_text.png',
+#         'sign_in_on_car_screen.png',
+#         'username_entry_field.png',
+#         'password_entry_field.png',
+#         'done_btn.png'
+#     ]
 
-    i = 0
+#     i = 0
 
-    while i < len(steps):
-        print('[Sign-In] {}'.format(steps[i][:-4]))
-        progress = find_and_tap(steps[i])
-        if progress:
-            checking_info_screen()
-            if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
-                print('[DEBUG] entering username')
-                os.system('adb shell input text "{}"'.format(account['username']))
-                time.sleep(2)
-                find_and_tap('next_btn.png')
-            elif steps[i][-9:-4] == 'field' and steps[i][:8] == 'password':
-                print('[DEBUG] entering password')
-                os.system('adb shell input text "{}"'.format(account['password']))
-                time.sleep(2)
-                find_and_tap('next_btn.png')
-            i += 1
-        else:
-            print('[Error] Fail on step {}'.format(steps[i][:-4]))
-            break
+#     while i < len(steps):
+#         print('[Sign-In] {}'.format(steps[i][:-4]))
+#         progress = find_and_tap(steps[i])
+#         if progress:
+#             checking_info_screen()
+#             if steps[i][-9:-4] == 'field' and steps[i][:8] == 'username':
+#                 print('[DEBUG] entering username')
+#                 os.system('adb shell input text "{}"'.format(account['username']))
+#                 time.sleep(2)
+#                 find_and_tap('next_btn.png')
+#             elif steps[i][-9:-4] == 'field' and steps[i][:8] == 'password':
+#                 print('[DEBUG] entering password')
+#                 os.system('adb shell input text "{}"'.format(account['password']))
+#                 time.sleep(2)
+#                 find_and_tap('next_btn.png')
+#             i += 1
+#         else:
+#             print('[Error] Fail on step {}'.format(steps[i][:-4]))
+#             break
 
-        time.sleep(3)
+#         time.sleep(3)
 
     # # tap google maps
     # print('tap google maps')
@@ -113,40 +113,40 @@ def sign_in_google_account():
     # print('Done')
     # done = find_and_tap('done_btn.png')
     # if not done:
-    #     return
+#     #     return
 
 
-def sign_out_google_account():
-    steps = ['google_maps_icon.png', 
-            'sign_in_user_icon.png',
-            'sign_out_btn.png',
-            ]
+# def sign_out_google_account():
+#     steps = ['google_maps_icon.png', 
+#             'sign_in_user_icon.png',
+#             'sign_out_btn.png',
+#             ]
     
-    i = 0
+#     i = 0
 
-    while i < len(steps):
-        print('[Sign-In] {}'.format(steps[i][:-4]))
-        progress = find_and_tap(steps[i])
-        if not progress:
-            print('[Error] Fail on step {}'.format(steps[i][:-4]))
-            break
-        else:
-            i += 1
+#     while i < len(steps):
+#         print('[Sign-In] {}'.format(steps[i][:-4]))
+#         progress = find_and_tap(steps[i])
+#         if not progress:
+#             print('[Error] Fail on step {}'.format(steps[i][:-4]))
+#             break
+#         else:
+#             i += 1
 
     
-    # # tap google maps
-    # print('tap google maps')
-    # if not find_and_tap('google_maps_icon.png'):
-    #     return
+#     # # tap google maps
+#     # print('tap google maps')
+#     # if not find_and_tap('google_maps_icon.png'):
+#     #     return
 
-    # # tap user icon
-    # print('tap user icon')
-    # if not find_and_tap('sign_in_user_icon.png'):
-    #     return
+#     # # tap user icon
+#     # print('tap user icon')
+#     # if not find_and_tap('sign_in_user_icon.png'):
+#     #     return
 
-    # # tap sign out google account
-    # print('sign out')
-    # if not find_and_tap('sign_out_btn.png'):
-    #     return
+#     # # tap sign out google account
+#     # print('sign out')
+#     # if not find_and_tap('sign_out_btn.png'):
+#     #     return
 
-# sign_out_google_account()
+# # sign_out_google_account()

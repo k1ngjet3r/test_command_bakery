@@ -1,4 +1,4 @@
-import os, time
+import os, time, subprocess
 from cv2 import cv2
 
 '''
@@ -34,7 +34,7 @@ def image_search(target_img, pattern, precision=0.8):
         result = cv2.matchTemplate(target, template, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
 
-        print(max_val)
+        print('         Image matching rate: {}'.format(max_val))
         
         if max_val < precision:
             return False
@@ -48,14 +48,19 @@ def image_search(target_img, pattern, precision=0.8):
         print("[ImgNotFound] OpenCV couldn't find the image file in the given directory")
 
 def tap_xy(x, y):
+    print('         Tap coordinates ({}, {})'.format(x, y))
     os.system('adb shell input tap {} {}'.format(x, y))
 
 def get_cur_screenshot():
     #get device's current screen shot and place it in img\temp folder
     current_dir = os.getcwd() + '/img/temp'
     current_dir.replace('\\', '/')
-    os.system('adb shell screencap -p /sdcard/current.png')
-    os.system('adb pull /sdcard/current.png {}'.format(current_dir))
+    capture = subprocess.check_output(['adb', 'shell', 'screencap', '-p', '/sdcard/current.png']).splitlines()
+    move_file = subprocess.check_output(['adb', 'pill', '/sdcard/current.png', current_dir]).splitlines()
+
+    print('         Screenshot Captured')
+    # os.system('adb shell screencap -p /sdcard/current.png')
+    # os.system('adb pull /sdcard/current.png {}'.format(current_dir))
 
 def find_and_tap(pattern):
     get_cur_screenshot()
@@ -72,29 +77,6 @@ def find_and_tap(pattern):
     except TypeError:
         print('[ImgNotFound] Please check your setting or device connection')
 
-
-def checking_info_screen():
-    checking_info_img = 'img\\ui_icon\\checking_info_text.png'   
-    while True:
-        get_cur_screenshot()
-        target_img = 'img\\temp\\current.png'
-        if image_search(target_img, checking_info_img) != False:
-            time.sleep(1)
-            continue
-        else:
-            break
-
-def checking_signin_screen():
-    checking_info_img = 'img\\ui_icon\\signing_in_text.png'
-    while True:
-        get_cur_screenshot()
-        target_img = 'img\\temp\\current.png'
-        if image_search(target_img, checking_info_img) != False:
-            time.sleep(1)
-            continue
-        else:
-            break
-
 def checking_screen(img):
     checking_info_img = 'img\\ui_icon\\' + img
     while True:
@@ -105,7 +87,6 @@ def checking_screen(img):
             continue
         else:
             break
-    
 
 # if __name__ == '__main__':
 #     get_cur_screenshot()

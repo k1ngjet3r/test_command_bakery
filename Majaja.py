@@ -13,6 +13,7 @@
     
 '''
 
+import subprocess
 from tkinter import StringVar, ttk
 from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status
 from PIL import Image, ImageTk
@@ -183,20 +184,28 @@ def exe_command():
             query = query_listbox.get(query_listbox.curselection())
             query = query.replace(' ', '\\ ')
             frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
-            os.system(frame+query)
+            frame = frame.split()
             print('[ADB] {}'.format(frame+query))
+            adb_query = frame.append(query)
+            subprocess.check_output(adb_query)
+            # os.system(frame+query)
+            
 
         # if user entered the query by themselve
         elif type_query != '':
             query = type_query.replace(' ', '\\ ')
             frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
-            os.system(frame+query)
             print('[ADB] {}'.format(frame+query))
+            print('[ADB] {}'.format(frame+query))
+            adb_query = frame.append(query)
+            subprocess.check_output(adb_query)
+            # os.system(frame+query)
+
 
 def on_select(event):
-    print('[DEBUG] event: ', event)
-    print('[DEBUG] event.widget: ', event.widget)
-    print('[DEBUG] event.widget.get(): ', event.widget.get())
+    # print('[DEBUG] event: ', event)
+    # print('[DEBUG] event.widget: ', event.widget)
+    # print('[DEBUG] event.widget.get(): ', event.widget.get())
 
     selected = event.widget.get()
 
@@ -224,7 +233,7 @@ def adb_status():
         v.set('Ready')
         color.set('green')
     else:
-        v.set('OH NO~\nDid you forget to\nturn on USB debugging?')
+        v.set('OH NO~\nOH NO~\nOH NO~')
         color.set('red')
 
 common_fg = 'white'
