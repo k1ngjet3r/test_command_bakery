@@ -15,7 +15,7 @@
 
 import subprocess
 from tkinter import StringVar, ttk
-from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status
+from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status, easter_egg
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
@@ -473,8 +473,16 @@ other_ctrl_frame.pack()
 other_lbl = tk.Label(other_ctrl_frame, text='Other', width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
 other_lbl.pack()
 
-screenshot_btn = tk.Button(other_ctrl_frame, text='screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
+screenshot_btn = tk.Button(other_ctrl_frame, text='Screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
 screenshot_btn.pack()
+
+sep= tk.Frame(other_ctrl_frame, height=6, bg=common_bg)
+sep.pack(side=tk.TOP)
+
+easter_egg_btn = tk.Button(other_ctrl_frame, text='Easter Egg', command=easter_egg, width=19, bg='grey', font='Helvetica 9 bold')
+easter_egg_btn.pack()
+
+
 
 
 window.call('wm', 'attributes', '.', '-topmost', '1')
