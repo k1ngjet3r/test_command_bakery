@@ -1,11 +1,12 @@
 '''
-    Welcome to version 2.1.0
+    Welcome to version 2.1.1
 
     Created by: Jeter Lin
 
     Adding new image recognition for system setting-related task accuracy
 
-    Current function including internet conncetion control, google account login or out control, create user, and Google Assistant command sender
+    Current function including internet conncetion control, google account login or out control, create user, 
+    Google Assistant command sender, media control, screenshot, and easter egg opener.
 
     If this is your first time using Majaja, there are few things that you need to do:
     1. Go to \json folder and create google_account.json to store google account's username and password
@@ -237,7 +238,7 @@ common_fg = 'white'
 common_bg = 'grey25'
 
 window = tk.Tk()
-window.title("MAJAJA v2.1.0 Beta")
+window.title("MAJAJA v2.1.1")
 window.resizable(False, False)
 
 '''
