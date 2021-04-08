@@ -185,9 +185,9 @@ def exe_command():
             frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
             frame = frame.split()
             print('[ADB] {}'.format(frame+query))
-            adb_query = frame.append(query)
-            subprocess.check_output(adb_query)
-            # os.system(frame+query)
+            # adb_query = frame.append(query)
+            # subprocess.check_output(adb_query)
+            os.system(frame+query)
             
 
         # if user entered the query by themselve
@@ -195,9 +195,9 @@ def exe_command():
             query = type_query.replace(' ', '\\ ')
             frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
             print('[ADB] {}'.format(frame+query))
-            adb_query = frame.append(query)
-            subprocess.check_output(adb_query)
-            # os.system(frame+query)
+            # adb_query = frame.append(query)
+            # subprocess.check_output(adb_query)
+            os.system(frame+query)
 
 def on_select(event):
     # print('[DEBUG] event: ', event)
