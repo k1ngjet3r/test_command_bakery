@@ -58,6 +58,9 @@ def screenshot():
     os.system('adb pull /sdcard/{}.png {}'.format(name, path))
     os.system('adb shell rm /sdcard/{}.png'.format(name))
 
+def easter_egg():
+    os.system('adb shell am broadcast -a android.intent.action.EASTEREGG --ez enable true')
+
 
 if __name__ == '__main__':
     print(subprocess.check_output(['adb', 'devices']).splitlines())

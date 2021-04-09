@@ -1,11 +1,12 @@
 '''
-    Welcome to version 2.1.0
+    Welcome to version 2.1.1
 
     Created by: Jeter Lin
 
     Adding new image recognition for system setting-related task accuracy
 
-    Current function including internet conncetion control, google account login or out control, create user, and Google Assistant command sender
+    Current function including internet conncetion control, google account login or out control, create user, 
+    Google Assistant command sender, media control, screenshot, and easter egg opener.
 
     If this is your first time using Majaja, there are few things that you need to do:
     1. Go to \json folder and create google_account.json to store google account's username and password
@@ -15,7 +16,7 @@
 
 import subprocess
 from tkinter import StringVar, ttk
-from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status
+from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status, easter_egg
 from PIL import Image, ImageTk
 import tkinter as tk
 import os
@@ -237,7 +238,7 @@ common_fg = 'white'
 common_bg = 'grey25'
 
 window = tk.Tk()
-window.title("MAJAJA v2.1.0 Beta")
+window.title("MAJAJA v2.1.1")
 window.resizable(False, False)
 
 '''
@@ -473,8 +474,16 @@ other_ctrl_frame.pack()
 other_lbl = tk.Label(other_ctrl_frame, text='Other', width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
 other_lbl.pack()
 
-screenshot_btn = tk.Button(other_ctrl_frame, text='screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
+screenshot_btn = tk.Button(other_ctrl_frame, text='Screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
 screenshot_btn.pack()
+
+sep= tk.Frame(other_ctrl_frame, height=6, bg=common_bg)
+sep.pack(side=tk.TOP)
+
+easter_egg_btn = tk.Button(other_ctrl_frame, text='Easter Egg', command=easter_egg, width=19, bg='grey', font='Helvetica 9 bold')
+easter_egg_btn.pack()
+
+
 
 
 window.call('wm', 'attributes', '.', '-topmost', '1')
