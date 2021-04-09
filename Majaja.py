@@ -183,7 +183,7 @@ def exe_command():
             query = query_listbox.get(query_listbox.curselection())
             query = query.replace(' ', '\\ ')
             frame = 'adb shell am start -n com.google.android.carassistant/com.google.android.apps.gsa.binaries.auto.app.voiceplate.VoicePlateActivity -e query '
-            frame = frame.split()
+            # frame = frame.split()
             print('[ADB] {}'.format(frame+query))
             # adb_query = frame.append(query)
             # subprocess.check_output(adb_query)
