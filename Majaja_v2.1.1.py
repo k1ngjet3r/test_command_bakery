@@ -15,6 +15,7 @@
 '''
 
 import subprocess
+from main.building_block import *
 from tkinter import StringVar, ttk
 from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status, easter_egg
 from PIL import Image, ImageTk
@@ -287,8 +288,7 @@ for connection, num, cmd in connection_var:
         connection_frame, text=connection, variable=connection_v, value=num, command=cmd, bg=common_bg, fg=common_fg, activebackground=common_bg, activeforeground=common_fg, selectcolor=common_bg)
     connection_rb.pack(side=tk.LEFT)
 
-sep= tk.Frame(connection_sign_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(connection_sign_frame, common_bg)
 
 sign_frame = tk.Frame(connection_sign_frame, borderwidth=2, relief='groove', bg=common_bg)
 sign_frame.pack(side=tk.TOP)
@@ -306,8 +306,7 @@ for status, num, cmd in sign_var:
     sign_rb = tk.Radiobutton(sign_frame, text=status, variable=sign_v, value=num, command=cmd, bg=common_bg, fg=common_fg, activebackground=common_bg, activeforeground=common_fg, selectcolor=common_bg)
     sign_rb.pack(side=tk.LEFT)
 
-sep= tk.Frame(connection_sign_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(connection_sign_frame, common_bg)
 
 v = StringVar()
 color = StringVar()
@@ -339,8 +338,7 @@ user_enrty.pack(side=tk.LEFT)
 user_btn = tk.Button(create_user_frame, text='Create', command=creat_user, width=5, bg='grey', font='Helvetica 9 bold')
 user_btn.pack(side=tk.LEFT)
 
-sep= tk.Frame(user_rlt_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(user_rlt_frame, common_bg)
 
 security_frm = tk.Frame(user_rlt_frame, borderwidth=2, relief='groove', bg=common_bg)
 security_frm.pack()
@@ -353,8 +351,7 @@ security_combobox.pack(side=tk.LEFT)
 security_btn = tk.Button(security_frm, text='Set', width=5, command=security_setting, bg='grey', font='Helvetica 9 bold')
 security_btn.pack(side=tk.LEFT)
 
-sep= tk.Frame(user_rlt_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(user_rlt_frame, common_bg)
 
 
 
@@ -381,8 +378,7 @@ var_hey_google = tk.IntVar()
 hey_google_checkbox = tk.Checkbutton(top_frame, text='Hey Google', variable=var_hey_google, onvalue=1, offvalue=0, bg=common_bg, fg=common_fg, activebackground=common_bg, activeforeground=common_fg, selectcolor=common_bg)
 hey_google_checkbox.pack(side=tk.LEFT)
 
-sep= tk.Frame(cmd_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(cmd_frame, common_bg)
 
 query_listbox_frame = tk.Frame(cmd_frame, bg=common_bg)
 query_listbox_frame.pack(side=tk.TOP)
@@ -398,14 +394,12 @@ query_listbox.pack(side=tk.TOP)
 # scrollbar.config(command=query_listbox.yview, background='grey')
 # scrollbar.pack(side="left", fill="y")
 
-sep= tk.Frame(query_listbox_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(query_listbox_frame, common_bg)
 
 type_query_field = tk.Entry(query_listbox_frame, width=35, bg='grey', fg=common_fg)
 type_query_field.pack(side=tk.TOP)
 
-sep= tk.Frame(cmd_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(cmd_frame, common_bg)
 
 send_btn_frame = tk.Frame(cmd_frame, bg=common_bg)
 send_btn_frame.pack(side=tk.TOP)
@@ -473,8 +467,7 @@ other_lbl.pack()
 screenshot_btn = tk.Button(other_ctrl_frame, text='Screenshot', command=screenshot, width=19, bg='grey', font='Helvetica 9 bold')
 screenshot_btn.pack()
 
-sep= tk.Frame(other_ctrl_frame, height=6, bg=common_bg)
-sep.pack(side=tk.TOP)
+separator(other_ctrl_frame, common_bg)
 
 easter_egg_btn = tk.Button(other_ctrl_frame, text='Easter Egg', command=easter_egg, width=19, bg='grey', font='Helvetica 9 bold')
 easter_egg_btn.pack()
