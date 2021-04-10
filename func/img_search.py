@@ -58,7 +58,7 @@ def get_cur_screenshot():
     # capture = subprocess.check_output(['adb', 'shell', 'screencap', '-p', '/sdcard/current.png']).splitlines()
     # move_file = subprocess.check_output(['adb', 'pill', '/sdcard/current.png', current_dir]).splitlines()
 
-    # print('         Screenshot Captured')
+    print('         Screenshot Captured')
     os.system('adb shell screencap -p /sdcard/current.png')
     os.system('adb pull /sdcard/current.png {}'.format(current_dir))
 
