@@ -54,7 +54,9 @@ def tap_xy(x, y):
 def get_cur_screenshot():
     #get device's current screen shot and place it in img\temp folder
     current_dir = os.getcwd() + '/img/temp'
-    current_dir.replace('\\', '/')
+    current_dir = current_dir.replace('\\', '/')
+    current_dir = current_dir.replace(' ', '\ ')
+
     # capture = subprocess.check_output(['adb', 'shell', 'screencap', '-p', '/sdcard/current.png']).splitlines()
     # move_file = subprocess.check_output(['adb', 'pill', '/sdcard/current.png', current_dir]).splitlines()
 

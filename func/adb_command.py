@@ -52,6 +52,7 @@ def pattern_lock():
 def screenshot():
     print('Getting the screenshot')
     path = os.getcwd().replace('\\', '/')+'/screenshot'
+    path = path.replace(' ', '\ ')
     now = datetime.now()
     name = '{}_{}_{}_{}'.format(now.day, now.hour, now.minute, now.second)
     os.system('adb shell screencap -p /sdcard/{}.png'.format(name))
