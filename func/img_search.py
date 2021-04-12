@@ -1,21 +1,21 @@
 import os, time, subprocess
 from cv2 import cv2
 
-'''
-    Search for a pattern from an image
-
-    <<based on https://github.com/drov0/python-imagesearch/blob/master/python_imagesearch/imagesearch.py>>
-
-    input:
-    target_img: target image that you want to search from
-    pattern: desired pattern you wish to find in the target_img
-    precision : the higher, the lesser tolerant and fewer false positives are found. Default is 0.8
-
-    Return:
-    the coordinate of the center of the matched pattern
-'''
-
 def image_search(target_img, pattern, precision=0.8):
+    '''
+        Search for a pattern from an image
+
+        <<based on https://github.com/drov0/python-imagesearch/blob/master/python_imagesearch/imagesearch.py>>
+
+        input:
+        target_img: target image that you want to search from
+        pattern: desired pattern you wish to find in the target_img
+        precision : the higher, the lesser tolerant and fewer false positives are found. Default is 0.8
+
+        Return:
+        the coordinate of the center of the matched pattern
+    '''
+
     # preprocess image
     target = cv2.imread(target_img, 0)
     template = cv2.imread(pattern, 0)
@@ -54,6 +54,8 @@ def tap_xy(x, y):
 def get_cur_screenshot():
     #get device's current screen shot and place it in img\temp folder
     current_dir = os.getcwd() + '/img/temp'
+
+    # Format the directory for the adb command
     current_dir = current_dir.replace('\\', '/')
     current_dir = current_dir.replace(' ', '\ ')
 
