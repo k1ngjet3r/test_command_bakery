@@ -62,9 +62,12 @@ def get_cur_screenshot():
     # capture = subprocess.check_output(['adb', 'shell', 'screencap', '-p', '/sdcard/current.png']).splitlines()
     # move_file = subprocess.check_output(['adb', 'pill', '/sdcard/current.png', current_dir]).splitlines()
 
-    print('         Screenshot Captured')
-    os.system('adb shell screencap -p /sdcard/current.png')
-    os.system('adb pull /sdcard/current.png {}'.format(current_dir))
+    try:
+        os.system('adb shell screencap -p /sdcard/current.png')
+        os.system('adb pull /sdcard/current.png {}'.format(current_dir))
+        print('         Screenshot Captured')
+    except:
+        print('Something Went Wrong!')
 
 def find_and_tap(pattern):
     get_cur_screenshot()
@@ -76,7 +79,6 @@ def find_and_tap(pattern):
         else:
             x, y = image_search(target_img, img_dir+pattern)
             tap_xy(x, y)
-            
 
     except TypeError:
         print('[ImgNotFound] Please check your setting or device connection')
