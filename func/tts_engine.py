@@ -8,7 +8,7 @@ def activate_ga():
 
 def tts(query):
     engine = pyttsx3.init()
-    engine.setProperty('rate', 130)
+    engine.setProperty('rate', 120)
     # giving the command via speaker
     engine.say(query)
     engine.runAndWait()
