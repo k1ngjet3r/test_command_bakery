@@ -5,17 +5,17 @@
 
     Adding new image recognition for system setting-related task accuracy
 
-    Current function including internet conncetion control, google account login or out control, create user, 
+    Current function including internet conncetion control, google account login or out control, create user,
     Google Assistant command sender, media control, screenshot, and easter egg opener.
 
     If this is your first time using Majaja, there are few things that you need to do:
     1. Go to \json folder and create google_account.json to store google account's username and password
     2. Create a folder named "temp" in the \img folder
-    
+
 '''
 
 import subprocess
-from tkinter import StringVar, ttk
+from tkinter import StringVar, font, ttk
 from func.adb_command import online, offline, pin_lock, pw_lock, pattern_lock, screenshot, check_adb_status, easter_egg
 from PIL import Image, ImageTk
 import tkinter as tk
@@ -25,7 +25,7 @@ from func.img_and_audio import img_selector, audio_selector
 from func.tts_engine import activate_ga, tts, hey_google_cmd, adb_cmd
 from playsound import playsound
 # from func.status_ctrl import sign_out_google_account
-from func.media_ctrl import play_pause, next_act, previous_act
+from func.media_ctrl import *
 from tkinter import messagebox
 import time
 from func.img_search import find_and_tap, checking_screen
@@ -68,7 +68,7 @@ def sign_in_google_account():
         v.set(steps[i][:-4])
         print('[Sign-In] {}'.format(steps[i][:-4]))
         progress = find_and_tap(steps[i])
-        
+
         if progress == False:
             print('[Error] Fail on step {}'.format(steps[i][:-4]))
             color.set('red')
@@ -101,16 +101,16 @@ def sign_in_google_account():
         v.set('DONE!')
 
 def sign_out_google_account():
-    steps = ['google_maps_icon.png', 
+    steps = ['google_maps_icon.png',
             'sign_in_user_icon.png',
             'sign_out_btn.png',
             ]
-    
+
     i = 0
 
     color.set('blue')
     v.set('Signing Out, Please Wait!')
-    
+
     while i < len(steps):
         color.set('blue')
         v.set(steps[i][:-4])
@@ -164,7 +164,7 @@ def exe_command():
             elif type_query != '':
                 print('[HeyGoogle/Typed/TTS] {}'.format(type_query))
                 hey_google_cmd(type_query)
-            
+
         # if user did not checked the hey google checkbox
         elif var_hey_google.get() == 0:
             # if user entered the query by themselve
@@ -176,7 +176,7 @@ def exe_command():
                 query = query_listbox.get(query_listbox.curselection())
                 print('[TTS] {}'.format(query))
                 adb_cmd(query)
-    
+
     # if user selected "Majami mode"
     elif mode == 2:
         # if user did not enter any query
@@ -187,7 +187,7 @@ def exe_command():
             frame = frame.split()
             print('[ADB] {}'.format(frame+query))
             os.system(frame+query)
-            
+
 
         # if user entered the query by themselve
         elif type_query != '':
@@ -444,25 +444,56 @@ more_ctrl = tk.Frame(window, width=500, bg=common_bg)
 more_ctrl.pack(side=tk.LEFT, fill=tk.Y)
 
 
-media_lbl = tk.Label(more_ctrl, text='Other', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
+media_lbl = tk.Label(more_ctrl, text='General Ctrl', width=22, font='Helvetica 10 bold', bg=common_bg, fg='goldenrod1')
 media_lbl.pack()
 
 media_ctrl_frm = tk.Frame(more_ctrl, borderwidth=2, relief='groove', bg=common_bg)
 
-media_ctrl_title = tk.Label(media_ctrl_frm, text='Media Control', width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
+song_ctrl_frm = tk.Frame(media_ctrl_frm, bg=common_bg)
+
+media_ctrl_title = tk.Label(song_ctrl_frm, text='Media Control',
+                            width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
 media_ctrl_title.pack()
-previous_btn = tk.Button(media_ctrl_frm, text=u"\u23EE", bg='grey', font='Helvetica 11 bold', width=5, command=previous_act)
+previous_btn = tk.Button(song_ctrl_frm, text=u"\u23EE", bg='grey',
+                         font='Helvetica 11 bold', width=5, command=previous_act)
 previous_btn.pack(side=tk.LEFT)
 
-play_pause_btn = tk.Button(media_ctrl_frm, text=u"\u23EF", bg='grey', font='Helvetica 11 bold', width=5, command=play_pause)
+play_pause_btn = tk.Button(song_ctrl_frm, text=u"\u23EF", bg='grey',
+                           font='Helvetica 11 bold', width=5, command=play_pause)
 play_pause_btn.pack(side=tk.LEFT)
 
-next_btn = tk.Button(media_ctrl_frm, text=u"\u23ED", width=5, bg='grey', font='Helvetica 11 bold', command=previous_act)
+next_btn = tk.Button(song_ctrl_frm, text=u"\u23ED", width=5,
+                     bg='grey', font='Helvetica 11 bold', command=previous_act)
 next_btn.pack(side=tk.LEFT)
+
+song_ctrl_frm.pack()
+
+vol_ctrl_title = tk.Label(media_ctrl_frm, text='Volume Control',
+                            width=23, font='Helvetica 9 bold', bg=common_bg, fg=common_fg)
+vol_ctrl_title.pack()
+
+volume_ctrl_frm = tk.Frame(media_ctrl_frm, bg=common_bg)
+
+volume_down_btn = tk.Button(volume_ctrl_frm, text='-', bg='grey',
+                            font='Helvetica 11 bold', width=5, command=volume_down)
+volume_down_btn.pack(side=tk.LEFT)
+
+mute_btn = tk.Button(volume_ctrl_frm, text='Mute', bg='grey',
+                     font='Helvetica 11 bold', width=5, command=mute)
+mute_btn.pack(side=tk.LEFT)
+
+volume_up_btn = tk.Button(volume_ctrl_frm, text='+', bg='grey',
+                            font='Helvetica 11 bold', width=5, command=volume_up)
+volume_up_btn.pack(side=tk.LEFT)
+
+volume_ctrl_frm.pack()
 
 media_ctrl_frm.pack()
 # max_user_btn = tk.Button(user_rlt_frame, text='Max User')
 # max_user_btn.pack()
+
+sep = tk.Frame(more_ctrl, height=6, bg=common_bg)
+sep.pack(side=tk.TOP)
 
 other_ctrl_frame = tk.Frame(more_ctrl, borderwidth=2, relief='groove', bg=common_bg)
 other_ctrl_frame.pack()
