@@ -16,4 +16,4 @@ def volume_down():
     os.system('adb shell input keyevent 25')
 
 def mute():
-    os.system('adb shell input keyevent 126')
+    os.system('adb shell input keyevent 164')
