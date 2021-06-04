@@ -129,6 +129,7 @@
     ],
     "Navi":[
         "Navigate to Taipei 101",
+        "How far to Taipei 101",
         "Starbucks",
         "Coffee shop",
         "cancel navigation",
@@ -145,6 +146,7 @@
     ],
     "Radio":[
         "play radio",
+        "Stop Radio",
 		"Play car radio",
         "Play FM Radio",
         "Play AM Radio",
